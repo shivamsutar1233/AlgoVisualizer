@@ -1,35 +1,19 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { motion } from "framer-motion";
-import { FC, useMemo, useCallback, useRef } from "react";
-import * as d3 from "d3";
-
+import { useMemo } from "react";
+import type { FC } from "react";
 interface VisualizerCanvasProps {
   data: number[];
   currentIndex: number;
   compareIndex: number;
 }
 
-const MotionBox = motion(Box);
-
 export const VisualizerCanvas: FC<VisualizerCanvasProps> = ({
   data,
   currentIndex,
   compareIndex,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const maxValue = Math.max(...data);
-
-  const getScale = useCallback(() => {
-    if (!containerRef.current) return null;
-    const height = containerRef.current.clientHeight;
-    return d3
-      .scaleLinear()
-      .domain([0, maxValue])
-      .range([0, height * 0.8]);
-  }, [maxValue]);
-  //   const theme = useTheme();
-  //   const maxValue = Math.max(...data);
 
   const barColors = useMemo(
     () => ({
