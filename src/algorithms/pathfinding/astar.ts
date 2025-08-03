@@ -1,4 +1,4 @@
-import type { Node } from '../components/PathFinder/PathFinderGrid';
+import type { GridNode as Node } from "../../components/PathFinder/types";
 
 interface Position {
   row: number;
@@ -14,9 +14,9 @@ const getNeighbors = (node: Node, grid: Node[][]): Node[] => {
   const { row, col } = node;
   const directions = [
     [-1, 0], // up
-    [1, 0],  // down
+    [1, 0], // down
     [0, -1], // left
-    [0, 1],  // right
+    [0, 1], // right
   ];
 
   for (const [dRow, dCol] of directions) {
@@ -28,7 +28,7 @@ const getNeighbors = (node: Node, grid: Node[][]): Node[] => {
       newRow < grid.length &&
       newCol >= 0 &&
       newCol < grid[0].length &&
-      grid[newRow][newCol].type !== 'wall'
+      grid[newRow][newCol].type !== "wall"
     ) {
       neighbors.push(grid[newRow][newCol]);
     }
@@ -37,12 +37,18 @@ const getNeighbors = (node: Node, grid: Node[][]): Node[] => {
   return neighbors;
 };
 
-export function* astar(grid: Node[][]): Generator<{ grid: Node[][], visitedNodes: Node[], currentNode: Node | null }> {
-  const startNode = grid.flat().find(node => node.type === 'start');
-  const endNode = grid.flat().find(node => node.type === 'end');
+export function* astar(
+  grid: Node[][]
+): Generator<{
+  grid: Node[][];
+  visitedNodes: Node[];
+  currentNode: Node | null;
+}> {
+  const startNode = grid.flat().find((node) => node.type === "start");
+  const endNode = grid.flat().find((node) => node.type === "end");
 
   if (!startNode || !endNode) {
-    throw new Error('Start or end node not found');
+    throw new Error("Start or end node not found");
   }
 
   // Reset node properties
@@ -63,31 +69,31 @@ export function* astar(grid: Node[][]): Generator<{ grid: Node[][], visitedNodes
 
   while (openSet.size > 0) {
     // Get node with lowest fScore
-    const current = Array.from(openSet).reduce((min, node) => 
+    const current = Array.from(openSet).reduce((min, node) =>
       node.fScore < min.fScore ? node : min
     );
 
     if (current === endNode) {
       // Found the goal
       yield {
-        grid: grid.map(row => [...row]),
+        grid: grid.map((row) => [...row]),
         visitedNodes: [...visitedNodesInOrder],
-        currentNode: current
+        currentNode: current,
       };
       break;
     }
 
     openSet.delete(current);
     current.isVisited = true;
-    if (current.type !== 'start') {
-      current.type = 'visited';
+    if (current.type !== "start") {
+      current.type = "visited";
     }
     visitedNodesInOrder.push(current);
 
     yield {
-      grid: grid.map(row => [...row]),
+      grid: grid.map((row) => [...row]),
       visitedNodes: [...visitedNodesInOrder],
-      currentNode: current
+      currentNode: current,
     };
 
     for (const neighbor of getNeighbors(current, grid)) {
@@ -96,14 +102,15 @@ export function* astar(grid: Node[][]): Generator<{ grid: Node[][], visitedNodes
       if (tentativeGScore < neighbor.gScore) {
         neighbor.previousNode = current;
         neighbor.gScore = tentativeGScore;
-        neighbor.fScore = tentativeGScore + getManhattanDistance(neighbor, endNode);
+        neighbor.fScore =
+          tentativeGScore + getManhattanDistance(neighbor, endNode);
 
         if (!openSet.has(neighbor)) {
           openSet.add(neighbor);
           yield {
-            grid: grid.map(row => [...row]),
+            grid: grid.map((row) => [...row]),
             visitedNodes: [...visitedNodesInOrder],
-            currentNode: neighbor
+            currentNode: neighbor,
           };
         }
       }
@@ -120,19 +127,19 @@ export function* astar(grid: Node[][]): Generator<{ grid: Node[][], visitedNodes
   }
 
   for (const node of path) {
-    if (node.type !== 'start' && node.type !== 'end') {
-      node.type = 'path';
+    if (node.type !== "start" && node.type !== "end") {
+      node.type = "path";
       yield {
-        grid: grid.map(row => [...row]),
+        grid: grid.map((row) => [...row]),
         visitedNodes: visitedNodesInOrder,
-        currentNode: node
+        currentNode: node,
       };
     }
   }
 
   return {
-    grid: grid.map(row => [...row]),
+    grid: grid.map((row) => [...row]),
     visitedNodes: visitedNodesInOrder,
-    currentNode: null
+    currentNode: null,
   };
 }

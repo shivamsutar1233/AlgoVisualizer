@@ -1,13 +1,13 @@
-import type { Node } from '../components/PathFinder/PathFinderGrid';
+import type { GridNode as Node } from "../../components/PathFinder/types";
 
 const getUnvisitedNeighbors = (node: Node, grid: Node[][]): Node[] => {
   const neighbors: Node[] = [];
   const { row, col } = node;
   const directions = [
     [-1, 0], // up
-    [1, 0],  // down
+    [1, 0], // down
     [0, -1], // left
-    [0, 1],  // right
+    [0, 1], // right
   ];
 
   for (const [dRow, dCol] of directions) {
@@ -20,7 +20,7 @@ const getUnvisitedNeighbors = (node: Node, grid: Node[][]): Node[] => {
       newCol >= 0 &&
       newCol < grid[0].length &&
       !grid[newRow][newCol].isVisited &&
-      grid[newRow][newCol].type !== 'wall'
+      grid[newRow][newCol].type !== "wall"
     ) {
       neighbors.push(grid[newRow][newCol]);
     }
@@ -29,12 +29,18 @@ const getUnvisitedNeighbors = (node: Node, grid: Node[][]): Node[] => {
   return neighbors;
 };
 
-export function* bfs(grid: Node[][]): Generator<{ grid: Node[][], visitedNodes: Node[], currentNode: Node | null }> {
-  const startNode = grid.flat().find(node => node.type === 'start');
-  const endNode = grid.flat().find(node => node.type === 'end');
+export function* bfs(
+  grid: Node[][]
+): Generator<{
+  grid: Node[][];
+  visitedNodes: Node[];
+  currentNode: Node | null;
+}> {
+  const startNode = grid.flat().find((node) => node.type === "start");
+  const endNode = grid.flat().find((node) => node.type === "end");
 
   if (!startNode || !endNode) {
-    throw new Error('Start or end node not found');
+    throw new Error("Start or end node not found");
   }
 
   // Reset node properties
@@ -53,16 +59,16 @@ export function* bfs(grid: Node[][]): Generator<{ grid: Node[][], visitedNodes: 
 
   while (queue.length > 0) {
     const currentNode = queue.shift()!;
-    
-    if (currentNode.type !== 'start') {
-      currentNode.type = 'visited';
+
+    if (currentNode.type !== "start") {
+      currentNode.type = "visited";
     }
     visitedNodesInOrder.push(currentNode);
 
     yield {
-      grid: grid.map(row => [...row]),
+      grid: grid.map((row) => [...row]),
       visitedNodes: [...visitedNodesInOrder],
-      currentNode: currentNode
+      currentNode: currentNode,
     };
 
     if (currentNode === endNode) {
@@ -77,9 +83,9 @@ export function* bfs(grid: Node[][]): Generator<{ grid: Node[][], visitedNodes: 
       queue.push(neighbor);
 
       yield {
-        grid: grid.map(row => [...row]),
+        grid: grid.map((row) => [...row]),
         visitedNodes: [...visitedNodesInOrder],
-        currentNode: neighbor
+        currentNode: neighbor,
       };
     }
   }
@@ -94,19 +100,19 @@ export function* bfs(grid: Node[][]): Generator<{ grid: Node[][], visitedNodes: 
   }
 
   for (const node of path) {
-    if (node.type !== 'start' && node.type !== 'end') {
-      node.type = 'path';
+    if (node.type !== "start" && node.type !== "end") {
+      node.type = "path";
       yield {
-        grid: grid.map(row => [...row]),
+        grid: grid.map((row) => [...row]),
         visitedNodes: visitedNodesInOrder,
-        currentNode: node
+        currentNode: node,
       };
     }
   }
 
   return {
-    grid: grid.map(row => [...row]),
+    grid: grid.map((row) => [...row]),
     visitedNodes: visitedNodesInOrder,
-    currentNode: null
+    currentNode: null,
   };
 }

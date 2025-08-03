@@ -1,4 +1,4 @@
-export type NodeType = 'empty' | 'wall' | 'start' | 'end' | 'visited' | 'path';
+export type NodeType = "empty" | "wall" | "start" | "end" | "visited" | "path";
 
 export interface GridNode {
   row: number;
@@ -7,6 +7,8 @@ export interface GridNode {
   distance: number;
   isVisited: boolean;
   previousNode: GridNode | null;
+  gScore: number;
+  fScore: number;
 }
 
 export type Grid = GridNode[][];

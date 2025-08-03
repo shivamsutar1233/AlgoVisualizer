@@ -9,10 +9,10 @@ import { selectionSort } from "../../algorithms/sorting/selectionSort";
 import { insertionSort } from "../../algorithms/sorting/insertionSort";
 import { heapSort } from "../../algorithms/sorting/heapSort";
 import type { SortingGenerator } from "../../algorithms/sorting/bubbleSort";
-import type { SortingAlgorithm } from "../ControlPanel/ControlPanel";
+import type { Algorithm } from "../ControlPanel/ControlPanel";
 
 export const SortingVisualizer = () => {
-  const [algorithm, setAlgorithm] = useState<SortingAlgorithm>("bubbleSort");
+  const [algorithm, setAlgorithm] = useState<Algorithm>("bubbleSort");
   const [speed, setSpeed] = useState(2.5);
   const [array, setArray] = useState<number[]>(() => {
     const size = 30;

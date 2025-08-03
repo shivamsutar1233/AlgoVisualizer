@@ -1,4 +1,4 @@
-import type { SortingGenerator } from './bubbleSort';
+import type { SortingGenerator } from "./bubbleSort";
 
 function* quickSortHelper(
   array: number[],
@@ -15,7 +15,7 @@ function* quickSortHelper(
       yield {
         array: [...array],
         currentIndex: j,
-        compareIndex: high // comparing with pivot
+        compareIndex: high, // comparing with pivot
       };
 
       if (array[j] < pivot) {
@@ -24,7 +24,7 @@ function* quickSortHelper(
         yield {
           array: [...array],
           currentIndex: i,
-          compareIndex: j
+          compareIndex: j,
         };
       }
     }
@@ -36,7 +36,7 @@ function* quickSortHelper(
     yield {
       array: [...array],
       currentIndex: pivotIndex,
-      compareIndex: high
+      compareIndex: high,
     };
 
     // Recursively sort the left part
@@ -48,11 +48,16 @@ function* quickSortHelper(
   return {
     array: [...array],
     currentIndex: -1,
-    compareIndex: -1
+    compareIndex: -1,
   };
 }
 
 export function* quickSort(array: number[]): SortingGenerator {
   const arr = [...array];
   yield* quickSortHelper(arr, 0, arr.length - 1);
+  return {
+    array: arr,
+    currentIndex: -1,
+    compareIndex: -1,
+  };
 }

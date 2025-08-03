@@ -1,8 +1,8 @@
-import { FC } from 'react';
-import { Box, Paper } from '@mui/material';
-import { motion } from 'framer-motion';
+import type { FC } from "react";
+import { Box, Paper } from "@mui/material";
+import { motion } from "framer-motion";
 
-export type NodeType = 'empty' | 'wall' | 'start' | 'end' | 'visited' | 'path';
+export type NodeType = "empty" | "wall" | "start" | "end" | "visited" | "path";
 
 interface Node {
   row: number;
@@ -28,18 +28,18 @@ export const PathFinderGrid: FC<PathFinderGridProps> = ({
 }) => {
   const getNodeColor = (node: Node): string => {
     switch (node.type) {
-      case 'wall':
-        return '#34495e';
-      case 'start':
-        return '#2ecc71';
-      case 'end':
-        return '#e74c3c';
-      case 'visited':
-        return '#3498db';
-      case 'path':
-        return '#f1c40f';
+      case "wall":
+        return "#34495e";
+      case "start":
+        return "#2ecc71";
+      case "end":
+        return "#e74c3c";
+      case "visited":
+        return "#3498db";
+      case "path":
+        return "#f1c40f";
       default:
-        return '#fff';
+        return "#fff";
     }
   };
 
@@ -48,17 +48,17 @@ export const PathFinderGrid: FC<PathFinderGridProps> = ({
       elevation={3}
       sx={{
         p: 2,
-        backgroundColor: 'background.paper',
-        overflow: 'auto',
+        backgroundColor: "background.paper",
+        overflow: "auto",
       }}
     >
       <Box
         sx={{
-          display: 'grid',
+          display: "grid",
           gridTemplateColumns: `repeat(${grid[0].length}, 25px)`,
-          gap: '1px',
-          backgroundColor: '#bdc3c7',
-          padding: '1px',
+          gap: "1px",
+          backgroundColor: "#bdc3c7",
+          padding: "1px",
         }}
       >
         {grid.map((row, rowIdx) =>
@@ -72,11 +72,11 @@ export const PathFinderGrid: FC<PathFinderGridProps> = ({
               onMouseEnter={() => onMouseEnter(rowIdx, colIdx)}
               onMouseUp={onMouseUp}
               style={{
-                width: '25px',
-                height: '25px',
+                width: "25px",
+                height: "25px",
                 backgroundColor: getNodeColor(node),
-                cursor: 'pointer',
-                borderRadius: '2px',
+                cursor: "pointer",
+                borderRadius: "2px",
               }}
             />
           ))

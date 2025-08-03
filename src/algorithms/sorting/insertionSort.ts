@@ -5,13 +5,13 @@ export const insertionSort = function* (array: number[]): SortingGenerator {
   const n = arr.length;
 
   for (let i = 1; i < n; i++) {
-    let key = arr[i];
+    const key = arr[i];
     let j = i - 1;
 
     yield {
       array: [...arr],
       currentIndex: i,
-      compareIndex: j
+      compareIndex: j,
     };
 
     while (j >= 0 && arr[j] > key) {
@@ -21,7 +21,7 @@ export const insertionSort = function* (array: number[]): SortingGenerator {
       yield {
         array: [...arr],
         currentIndex: j + 1,
-        compareIndex: j
+        compareIndex: j,
       };
     }
 
@@ -29,13 +29,13 @@ export const insertionSort = function* (array: number[]): SortingGenerator {
     yield {
       array: [...arr],
       currentIndex: j + 1,
-      compareIndex: i
+      compareIndex: i,
     };
   }
 
   return {
     array: arr,
     currentIndex: -1,
-    compareIndex: -1
+    compareIndex: -1,
   };
 };

@@ -1,5 +1,5 @@
-import { Box, Paper, Typography } from '@mui/material';
-import { FC } from 'react';
+import { Box, Paper, Typography } from "@mui/material";
+import type { FC } from "react";
 
 interface InfoPanelProps {
   algorithm: string;
@@ -25,12 +25,8 @@ export const InfoPanel: FC<InfoPanelProps> = ({
         <Typography>
           Step: {currentStep} / {totalSteps}
         </Typography>
-        <Typography>
-          Time Complexity: {timeComplexity}
-        </Typography>
-        <Typography>
-          Space Complexity: {spaceComplexity}
-        </Typography>
+        <Typography>Time Complexity: {timeComplexity}</Typography>
+        <Typography>Space Complexity: {spaceComplexity}</Typography>
       </Box>
     </Paper>
   );

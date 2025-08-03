@@ -8,9 +8,15 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { FC } from "react";
+import type { FC } from "react";
 
-export type SortingAlgorithm = "bubbleSort" | "quickSort" | "mergeSort" | "heapSort" | "insertionSort" | "selectionSort";
+export type SortingAlgorithm =
+  | "bubbleSort"
+  | "quickSort"
+  | "mergeSort"
+  | "heapSort"
+  | "insertionSort"
+  | "selectionSort";
 export type PathFindingAlgorithm = "dijkstra" | "astar" | "bfs" | "dfs";
 export type Algorithm = SortingAlgorithm | PathFindingAlgorithm;
 

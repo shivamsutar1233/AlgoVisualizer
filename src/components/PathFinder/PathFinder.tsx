@@ -1,17 +1,17 @@
-import type { FC } from 'react';
-import { useState, useRef } from 'react';
-import { Box, Paper } from '@mui/material';
-import { PathFinderGrid } from './PathFinderGrid';
-import { ControlPanel } from '../ControlPanel/ControlPanel';
-import type { Algorithm } from '../ControlPanel/ControlPanel';
-import { dijkstra } from '../../algorithms/pathfinding/dijkstra';
-import { bfs } from '../../algorithms/pathfinding/bfs';
-import { dfs } from '../../algorithms/pathfinding/dfs';
-import { astar } from '../../algorithms/pathfinding/astar';
-import type { PathFindingGenerator } from '../../algorithms/pathfinding/dijkstra';
-import type { Grid, GridNode } from './types';
+import type { FC } from "react";
+import { useState, useRef } from "react";
+import { Box, Paper } from "@mui/material";
+import { PathFinderGrid } from "./PathFinderGrid";
+import { ControlPanel } from "../ControlPanel/ControlPanel";
+import type { Algorithm } from "../ControlPanel/ControlPanel";
+import { dijkstra } from "../../algorithms/pathfinding/dijkstra";
+import { bfs } from "../../algorithms/pathfinding/bfs";
+import { dfs } from "../../algorithms/pathfinding/dfs";
+import { astar } from "../../algorithms/pathfinding/astar";
+import type { PathFindingGenerator } from "../../algorithms/pathfinding/dijkstra";
+import type { Grid, GridNode } from "./types";
 
-export type PathFindingAlgorithm = 'dijkstra' | 'astar' | 'bfs' | 'dfs';
+export type PathFindingAlgorithm = "dijkstra" | "astar" | "bfs" | "dfs";
 
 const createInitialGrid = (rows: number, cols: number): Grid => {
   const grid: Grid = [];
@@ -21,10 +21,12 @@ const createInitialGrid = (rows: number, cols: number): Grid => {
       currentRow.push({
         row,
         col,
-        type: 'empty',
+        type: "empty",
         distance: Infinity,
         isVisited: false,
         previousNode: null,
+        gScore: Infinity,
+        fScore: Infinity,
       });
     }
     grid.push(currentRow);
@@ -33,15 +35,17 @@ const createInitialGrid = (rows: number, cols: number): Grid => {
 };
 
 export const PathFinder: FC = () => {
-  const [algorithm, setAlgorithm] = useState<PathFindingAlgorithm>('dijkstra');
+  const [algorithm, setAlgorithm] = useState<PathFindingAlgorithm>("dijkstra");
   const [speed, setSpeed] = useState(2.5);
   const [isRunning, setIsRunning] = useState(false);
   const [grid, setGrid] = useState<Grid>(() => createInitialGrid(20, 40));
   const [startNode, setStartNode] = useState<GridNode | null>(null);
   const [endNode, setEndNode] = useState<GridNode | null>(null);
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
-  const [selectedTool, setSelectedTool] = useState<'wall' | 'start' | 'end'>('wall');
-  
+  const [selectedTool, setSelectedTool] = useState<"wall" | "start" | "end">(
+    "wall"
+  );
+
   const runningRef = useRef(false);
   const generatorRef = useRef<PathFindingGenerator | null>(null);
 
@@ -51,22 +55,22 @@ export const PathFinder: FC = () => {
     const newGrid = grid.slice();
     const node = newGrid[row][col];
 
-    if (selectedTool === 'start') {
+    if (selectedTool === "start") {
       // Remove previous start node if it exists
       if (startNode) {
-        newGrid[startNode.row][startNode.col].type = 'empty';
+        newGrid[startNode.row][startNode.col].type = "empty";
       }
-      node.type = 'start';
+      node.type = "start";
       setStartNode(node);
-    } else if (selectedTool === 'end') {
+    } else if (selectedTool === "end") {
       // Remove previous end node if it exists
       if (endNode) {
-        newGrid[endNode.row][endNode.col].type = 'empty';
+        newGrid[endNode.row][endNode.col].type = "empty";
       }
-      node.type = 'end';
+      node.type = "end";
       setEndNode(node);
     } else {
-      node.type = node.type === 'wall' ? 'empty' : 'wall';
+      node.type = node.type === "wall" ? "empty" : "wall";
     }
 
     setGrid(newGrid);
@@ -94,18 +98,18 @@ export const PathFinder: FC = () => {
     setIsRunning(true);
 
     if (!generatorRef.current) {
-      const gridCopy = grid.map(row => row.map(node => ({...node})));
+      const gridCopy = grid.map((row) => row.map((node) => ({ ...node })));
       switch (algorithm) {
-        case 'dijkstra':
+        case "dijkstra":
           generatorRef.current = dijkstra(gridCopy);
           break;
-        case 'bfs':
+        case "bfs":
           generatorRef.current = bfs(gridCopy);
           break;
-        case 'dfs':
+        case "dfs":
           generatorRef.current = dfs(gridCopy);
           break;
-        case 'astar':
+        case "astar":
           generatorRef.current = astar(gridCopy);
           break;
         default:
@@ -158,16 +162,16 @@ export const PathFinder: FC = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <Paper sx={{ p: 2 }}>
         <ControlPanel
           algorithm={algorithm}
           setAlgorithm={(newAlgo: Algorithm) => {
             if (
-              newAlgo === 'dijkstra' ||
-              newAlgo === 'astar' ||
-              newAlgo === 'bfs' ||
-              newAlgo === 'dfs'
+              newAlgo === "dijkstra" ||
+              newAlgo === "astar" ||
+              newAlgo === "bfs" ||
+              newAlgo === "dfs"
             ) {
               setAlgorithm(newAlgo);
             }
@@ -179,19 +183,19 @@ export const PathFinder: FC = () => {
           onReset={onReset}
           isRunning={isRunning}
         />
-        <Box sx={{ mt: 2, display: 'flex', gap: 1 }}>
-          {['wall', 'start', 'end'].map((tool) => (
+        <Box sx={{ mt: 2, display: "flex", gap: 1 }}>
+          {["wall", "start", "end"].map((tool) => (
             <Box
               key={tool}
-              onClick={() => setSelectedTool(tool as 'wall' | 'start' | 'end')}
+              onClick={() => setSelectedTool(tool as "wall" | "start" | "end")}
               sx={{
                 p: 1,
-                cursor: 'pointer',
-                bgcolor: selectedTool === tool ? 'primary.main' : 'grey.200',
-                color: selectedTool === tool ? 'white' : 'text.primary',
+                cursor: "pointer",
+                bgcolor: selectedTool === tool ? "primary.main" : "grey.200",
+                color: selectedTool === tool ? "white" : "text.primary",
                 borderRadius: 1,
-                '&:hover': {
-                  bgcolor: selectedTool === tool ? 'primary.dark' : 'grey.300',
+                "&:hover": {
+                  bgcolor: selectedTool === tool ? "primary.dark" : "grey.300",
                 },
               }}
             >
@@ -204,10 +208,10 @@ export const PathFinder: FC = () => {
       <Paper
         sx={{
           p: 2,
-          height: '75vh',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
+          height: "75vh",
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <PathFinderGrid
