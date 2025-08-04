@@ -11,7 +11,7 @@ export const selectionSort = function* (array: number[]): SortingGenerator {
     yield {
       array: [...arr],
       currentIndex: i,
-      compareIndex: minIndex
+      compareIndex: minIndex,
     };
 
     // Find the minimum element in the unsorted part of the array
@@ -20,7 +20,7 @@ export const selectionSort = function* (array: number[]): SortingGenerator {
       yield {
         array: [...arr],
         currentIndex: minIndex,
-        compareIndex: j
+        compareIndex: j,
       };
 
       if (arr[j] < arr[minIndex]) {
@@ -28,7 +28,7 @@ export const selectionSort = function* (array: number[]): SortingGenerator {
         yield {
           array: [...arr],
           currentIndex: j,
-          compareIndex: minIndex
+          compareIndex: minIndex,
         };
         minIndex = j;
       }
@@ -40,7 +40,7 @@ export const selectionSort = function* (array: number[]): SortingGenerator {
       yield {
         array: [...arr],
         currentIndex: i,
-        compareIndex: minIndex
+        compareIndex: minIndex,
       };
 
       [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
@@ -49,7 +49,7 @@ export const selectionSort = function* (array: number[]): SortingGenerator {
       yield {
         array: [...arr],
         currentIndex: i,
-        compareIndex: -1
+        compareIndex: -1,
       };
     }
   }
@@ -58,6 +58,6 @@ export const selectionSort = function* (array: number[]): SortingGenerator {
   return {
     array: arr,
     currentIndex: -1,
-    compareIndex: -1
+    compareIndex: -1,
   };
 };

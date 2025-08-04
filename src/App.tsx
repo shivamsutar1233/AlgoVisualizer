@@ -56,7 +56,8 @@ const theme = createTheme({
 });
 
 const App: React.FC = () => {
-  const [visualizerType, setVisualizerType] = useState<VisualizerType>("sorting");
+  const [visualizerType, setVisualizerType] =
+    useState<VisualizerType>("sorting");
   const [algorithm, setAlgorithm] = useState<Algorithm>("bubbleSort");
   const [speed, setSpeed] = useState(2.5);
   const [array, setArray] = useState<number[]>(() => {
@@ -236,7 +237,10 @@ const App: React.FC = () => {
                 <ToggleButton value="sorting" aria-label="sorting algorithms">
                   Sorting
                 </ToggleButton>
-                <ToggleButton value="pathfinding" aria-label="pathfinding algorithms">
+                <ToggleButton
+                  value="pathfinding"
+                  aria-label="pathfinding algorithms"
+                >
                   Pathfinding
                 </ToggleButton>
               </ToggleButtonGroup>

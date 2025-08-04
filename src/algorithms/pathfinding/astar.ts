@@ -37,9 +37,7 @@ const getNeighbors = (node: Node, grid: Node[][]): Node[] => {
   return neighbors;
 };
 
-export function* astar(
-  grid: Node[][]
-): Generator<{
+export function* astar(grid: Node[][]): Generator<{
   grid: Node[][];
   visitedNodes: Node[];
   currentNode: Node | null;

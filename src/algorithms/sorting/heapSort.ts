@@ -1,6 +1,10 @@
 import type { SortingGenerator } from "./bubbleSort";
 
-function* heapify(arr: number[], n: number, i: number): Generator<{ array: number[], currentIndex: number, compareIndex: number }> {
+function* heapify(
+  arr: number[],
+  n: number,
+  i: number
+): Generator<{ array: number[]; currentIndex: number; compareIndex: number }> {
   let largest = i;
   const left = 2 * i + 1;
   const right = 2 * i + 2;
@@ -9,7 +13,7 @@ function* heapify(arr: number[], n: number, i: number): Generator<{ array: numbe
     yield {
       array: [...arr],
       currentIndex: largest,
-      compareIndex: left
+      compareIndex: left,
     };
 
     if (arr[left] > arr[largest]) {
@@ -21,7 +25,7 @@ function* heapify(arr: number[], n: number, i: number): Generator<{ array: numbe
     yield {
       array: [...arr],
       currentIndex: largest,
-      compareIndex: right
+      compareIndex: right,
     };
 
     if (arr[right] > arr[largest]) {
@@ -34,7 +38,7 @@ function* heapify(arr: number[], n: number, i: number): Generator<{ array: numbe
     yield {
       array: [...arr],
       currentIndex: i,
-      compareIndex: largest
+      compareIndex: largest,
     };
 
     yield* heapify(arr, n, largest);
@@ -56,7 +60,7 @@ export const heapSort = function* (array: number[]): SortingGenerator {
     yield {
       array: [...arr],
       currentIndex: 0,
-      compareIndex: i
+      compareIndex: i,
     };
 
     yield* heapify(arr, i, 0);
@@ -65,6 +69,6 @@ export const heapSort = function* (array: number[]): SortingGenerator {
   return {
     array: arr,
     currentIndex: -1,
-    compareIndex: -1
+    compareIndex: -1,
   };
 };

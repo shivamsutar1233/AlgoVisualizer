@@ -29,9 +29,7 @@ const getUnvisitedNeighbors = (node: Node, grid: Node[][]): Node[] => {
   return neighbors;
 };
 
-export function* dfs(
-  grid: Node[][]
-): Generator<{
+export function* dfs(grid: Node[][]): Generator<{
   grid: Node[][];
   visitedNodes: Node[];
   currentNode: Node | null;

@@ -1,10 +1,13 @@
 # Algorithm Visualizer - Project Ideas
 
 ## Overview
+
 The Algorithm Visualizer will be an interactive web application that helps users understand various algorithms through visual animations and step-by-step explanations.
 
 ## Core Features
+
 1. **Sorting Algorithms Visualization**
+
    - Bubble Sort
    - Quick Sort
    - Merge Sort
@@ -12,8 +15,9 @@ The Algorithm Visualizer will be an interactive web application that helps users
    - Insertion Sort
 
 2. **Path Finding Algorithms**
+
    - Dijkstra's Algorithm
-   - A* Search
+   - A\* Search
    - Breadth-First Search
    - Depth-First Search
 
@@ -24,7 +28,9 @@ The Algorithm Visualizer will be an interactive web application that helps users
    - Stack and Queue operations
 
 ## User Interface Components
+
 1. **Control Panel**
+
    - Algorithm selection dropdown
    - Speed control slider
    - Start/Pause/Reset buttons
@@ -32,6 +38,7 @@ The Algorithm Visualizer will be an interactive web application that helps users
    - Custom input options
 
 2. **Visualization Area**
+
    - Main canvas for algorithm animation
    - Color-coded elements
    - Step counter
@@ -44,7 +51,9 @@ The Algorithm Visualizer will be an interactive web application that helps users
    - Step-by-step explanation
 
 ## Additional Features
+
 1. **User Interactions**
+
    - Custom input creation
    - Save/Load scenarios
    - Step-by-step execution
