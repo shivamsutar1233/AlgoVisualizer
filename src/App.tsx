@@ -12,6 +12,7 @@ import { ControlPanel } from "./components/ControlPanel/ControlPanel";
 import { VisualizerCanvas } from "./components/VisualizerCanvas/VisualizerCanvas";
 import { InfoPanel } from "./components/InfoPanel/InfoPanel";
 import { PathFinder } from "./components/PathFinder/PathFinder";
+import { TreeVisualizer } from "./components/TreeVisualizer";
 import { bubbleSort } from "./algorithms/sorting/bubbleSort";
 import { quickSort } from "./algorithms/sorting/quickSort";
 import { mergeSort } from "./algorithms/sorting/mergeSort";
@@ -21,7 +22,7 @@ import { heapSort } from "./algorithms/sorting/heapSort";
 import type { SortingGenerator } from "./algorithms/sorting/bubbleSort";
 import type { Algorithm } from "./components/ControlPanel/ControlPanel";
 
-type VisualizerType = "sorting" | "pathfinding";
+type VisualizerType = "sorting" | "pathfinding" | "tree";
 
 const theme = createTheme({
   palette: {
@@ -243,6 +244,9 @@ const App: React.FC = () => {
                 >
                   Pathfinding
                 </ToggleButton>
+                <ToggleButton value="tree" aria-label="tree algorithms">
+                  Tree
+                </ToggleButton>
               </ToggleButtonGroup>
             </Box>
           </Box>
@@ -316,8 +320,21 @@ const App: React.FC = () => {
                 />
               </Box>
             </Box>
-          ) : (
+          ) : visualizerType === "pathfinding" ? (
             <PathFinder />
+          ) : (
+            <Box
+              sx={{
+                bgcolor: "background.paper",
+                borderRadius: 2,
+                boxShadow: theme.shadows[4],
+                p: { xs: 2, sm: 3 },
+                height: { xs: "75vh", sm: "80vh" },
+                overflow: "auto",
+              }}
+            >
+              <TreeVisualizer />
+            </Box>
           )}
         </Box>
       </Box>
